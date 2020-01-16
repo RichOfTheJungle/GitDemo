@@ -1,87 +1,44 @@
-pipeline{
-
+pipeline
+{
 agent any
 
-stages
+	stages
+	{
+		stage('Build')
+		{
+			steps
+			{
+				sh "mvn clean"
+			}
+		}
+		stage('Deploy')
+		{
+			steps
+			{
+				echo 'deploying the code'
+			}
+		}
+		stage('Test')
+		{
+			steps
+			{
+				sh "mvn test"
+			}
+		}
+		stage('Unit Testing')
+		{
+			steps 
+			{
+				sh "mvn compike"
+			}
+		}
+		stage('Release')
+		{
+			steps
+			{
+				echo 'releasing the project'
+			}
+		}
 
-{
-
-stage('Build')
-
-{
-
-steps{
-
-bat "mvn compile"
-
-}
-
-}
-
-stage('deploy')
-
-{
-
-when{
-
-branch "master"
-
-}
-
-steps{
-
-echo develop
-
-}
-
-}
-
-stage('test')
-
-{
-
-parallel{
-
-stage('Unit Testing')
-
-{
-
-steps{
-
-echo 'hello'
-
-}
-
-}
-
-stage('UI Testing')
-
-{
-
-steps{
-
-bat "mvn test"
-
-}
-
-}
-
-}
-
-}
-
-stage('Release')
-
-{
-
-steps{
-
-echo 'Releasing it'
-
-}
-
-}
-
-}
-
+	}
 }
